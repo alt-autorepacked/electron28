@@ -1,16 +1,17 @@
 on:
-  workflow_call:
-    inputs:
-      branch:
-        required: true
-        type: string
-      arch: 
-        required: true
-        type: string
+  push:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch:
+          - sisyphus
+          - p10
+        arch:
+          - amd64
+          - arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,14 +19,14 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         with:
-          platforms: ${{ inputs.arch }}
+          platforms: ${{ matrix.arch }}
 
       - name: Run the build process with Docker
         uses: addnab/docker-run-action@v3
         with:
-          image: "alt:${{ inputs.branch }}"
+          image: "alt:${{ matrix.branch }}"
           options: |
-            --platform linux/${{ inputs.arch }}
+            --platform linux/${{ matrix.arch }}
             --volume ${{ github.workspace }}/:/workspace
             --env GH_TOKEN=${{ github.token }}
             --env ALLOW_ROOT_USER=1
