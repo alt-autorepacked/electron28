@@ -1,7 +1,7 @@
 # TODO: build from sources
 Name: electron28
 Version: 28.2.10
-Release: alt1
+Release: alt2
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
 
@@ -46,10 +46,15 @@ patchelf --set-rpath '%_libdir/%name' %buildroot%_bindir/%name
 %ifarch %supported_arch
 %_bindir/%name
 %attr(4711,root,root) %_libdir/%name/chrome-sandbox
+%attr(0755,root,root) %_libdir/%name/chrome_crashpad_handler
+%attr(0755,root,root) %_libdir/%name/electron
 %_libdir/%name/
 %endif
 
 %changelog
+* Wed May 08 2024 Maxim Slipenko <noreply@maxim.slipenko.com> 28.2.10-alt2
+- fix rights (alt-autorepacked/electron28#1)
+
 * Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 28.2.10-alt1
 - new version 28.2.10 (with rpmrb script)
 
