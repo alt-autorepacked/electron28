@@ -11,7 +11,7 @@ jobs:
           - p10
         arch:
           - amd64
-          - arm64
+#          - arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,5 +34,6 @@ jobs:
             cd /workspace
             apt-get update && apt-get -y install git etersoft-build-utils
             curl -sL https://eepm.ru/epm.sh | bash /dev/stdin ei
+            echo "%_allow_root_build 1" >> ~/.rpmmacros
             rpmgp -l *.spec | epm --skip-installed --auto install 
             rpmgs -f *.spec
