@@ -47,6 +47,7 @@ jobs:
             mkdir /out
             find ~/RPM/RPMS -type f -exec cp "{}" /out/ \;
 
+            _package=electron28
             cd /out
             _add_repo_suffix
             download_version=$(_check_version_from_download)
