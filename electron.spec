@@ -11,8 +11,10 @@ Group: Development/Other
 
 # Source-url: https://github.com/electron/electron/releases/download/v%version/electron-v%version-linux-x64.zip
 Source: %name-%version.tar
+# Source2-url: https://github.com/electron/electron/releases/download/v%version/electron-v%version-linux-arm64.zip
+Source2: %name-%version-aarch64.tar
 
-%define supported_arch x86_64
+%define supported_arch x86_64 aarch64
 
 %set_verify_elf_method skip
 %global __find_debuginfo_files %nil
@@ -32,6 +34,10 @@ Build cross platform desktop apps with JavaScript, HTML, and CSS.
 
 %prep
 %setup -c
+%ifarch aarch64
+tar xfv %SOURCE2
+rm -rf swiftshader
+%endif
 
 %install
 mkdir -p %buildroot%_libdir/%name/
