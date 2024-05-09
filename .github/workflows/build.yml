@@ -43,7 +43,8 @@ jobs:
             epm tool eget https://raw.githubusercontent.com/alt-autorepacked/common/v$COMMON_VERSION/common.sh
             . ./common.sh
 
-            rpmgp -l *.spec | epm --skip-installed --auto install 
+            INSTALL=$(rpmgp -l *.spec)
+            epm --skip-installed --auto install $INSTALL
             rpmgs -f *.spec
             rpmbb *.spec
             
